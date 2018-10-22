@@ -1,0 +1,114 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'io.fabric'
+
+android {
+    compileSdkVersion 28
+    flavorDimensions "mode"
+    defaultConfig {
+        applicationId "pl.skipcode.basekotlinapp"
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Versions.versionCode
+        versionName Versions.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        production {
+            dimension "mode"
+            buildConfigField "boolean", "TRY_NOT_TO_USE_SSL", "false"
+            buildConfigField "String", "PATH", "\"https://randomapi.com/api/\""
+            buildConfigField "String", "PATH_API", "\"https://randomapi.com/api/\""
+        }
+        staging {
+            dimension "mode"
+            applicationIdSuffix ".stage"
+            versionNameSuffix"-stage"
+            buildConfigField "boolean", "TRY_NOT_TO_USE_SSL", "false"
+            buildConfigField "String", "PATH", "\"https://randomapi.com/api/\""
+            buildConfigField "String", "PATH_API", "\"https://randomapi.com/api/\""
+        }
+        develop {
+            dimension "mode"
+            applicationIdSuffix ".develop"
+            versionNameSuffix"-develop"
+            buildConfigField "boolean", "TRY_NOT_TO_USE_SSL", "false"
+            buildConfigField "String", "PATH", "\"https://randomapi.com/api/\""
+            buildConfigField "String", "PATH_API", "\"https://randomapi.com/api/\""
+        }
+    }
+    applicationVariants.all { variant ->
+        buildConfigField "String", "DATE_FORMAT", "\"yyyy-MM-dd HH:mm:ss\""
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Libs.kotlinStdLib
+
+    //Fabric
+    implementation(Libs.crashlytics) {
+        transitive = true;
+    }
+
+    //Timber
+    implementation Libs.timber
+
+    //Leakcanary
+    debugImplementation Libs.leakcanary
+
+    //Support
+    implementation Libs.appCompat
+    implementation Libs.constraintLayout
+    implementation Libs.fragment
+    implementation Libs.design
+
+    //Dagger
+    implementation Libs.dagger2
+    kapt Libs.dagger2Compiler
+    implementation Libs.dagger2Android
+    implementation Libs.dagger2AndroidSupport
+    kapt Libs.dagger2Processor
+
+    //RxJava
+    implementation Libs.rxjava2RxAndroid
+    implementation Libs.rxjava2Rxjava
+    implementation Libs.rxandroid
+
+    //RxPermission
+    implementation Libs.rxPermissions
+
+    //Retrofit
+    implementation Libs.retrofit
+    implementation Libs.retrofitRxJava2
+    implementation Libs.retrofitConverterGson
+
+    //OkHttp
+    implementation Libs.okhttp3
+    implementation Libs.okhttp3Interceptor
+
+    //Hawk
+    implementation Libs.hawk
+
+    //Parceler
+    implementation Libs.parceler
+    kapt Libs.parcelerProcessor
+
+    testImplementation Libs.junit
+    testImplementation Libs.mockito
+    androidTestImplementation Libs.runner
+    androidTestImplementation Libs.espresso
+}
