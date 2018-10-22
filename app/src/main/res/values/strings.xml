@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Base Kotlin App</string>
+    <string name="btn_login">Login</string>
+    <string name="validate_username_empty">Uzupełnij nazwe użytkownika</string>
+    <string name="validate_username_too_short">Nazwa za krótka, min. 3 znaki</string>
+    <string name="error_wrong_login_data">Niepoprawne dane</string>
+    <string name="error_permissions_camera">Uprawnienia są wymagane</string>
+    <string name="error_api_connection_error">Błąd połączenia</string>
+    <string name="error_api_unauthorized">Brak uprawnień</string>
+    <string name="error_api_not_found">Nic nie znaleziono</string>
+</resources>
